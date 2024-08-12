@@ -1,0 +1,12 @@
+git config --glonbal user.name "janainatex"
+git config --global user.email janainajapa05@gmail.com
+
+
+dotnet new mvc -o GCook
+
+cd GCook
+
+ dotnet ef migrations add InitialCreate
+
+ TODA AULA:
+ dotnet ef database update
