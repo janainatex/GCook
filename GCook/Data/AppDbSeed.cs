@@ -139,7 +139,7 @@ public class AppDbSeed
                 Nome = "Carne Moída Mexicana",
                 Descricao = "Prato perfeito para um lanche rápido ou mesmo uma refeição picante. Carne moída, pimentões, temperos e muito queijooooo",
                 CategoriaId = 4,
-                Dificuldade = Dificuldade.Facil,
+                Dificuldade = Dificuldade.Fácil,
                 Rendimento = 3,
                 TempoPreparo = "20 minutos",
                 Foto = "/img/receitas/1.jpg",
@@ -270,8 +270,8 @@ public class AppDbSeed
         List<Usuario> usuarios = new(){
             new Usuario(){
                 UsuarioId = users[0].Id,
-                Nome = "Janaina Rocha Teixeira",
-                DataNascimento = DateTime.Parse("05/08/1981"),
+                Nome = "Matheus Bertolini",
+                DataNascimento = DateTime.Parse("10/01/2007"),
                 Foto = "/img/usuarios/avatar.png"
             }
         };

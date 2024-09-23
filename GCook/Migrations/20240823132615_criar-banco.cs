@@ -90,7 +90,7 @@ namespace GCook.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Ingredientes",
+                name: "Ingrediente",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -100,7 +100,7 @@ namespace GCook.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Ingredientes", x => x.Id);
+                    table.PrimaryKey("PK_Ingrediente", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -294,7 +294,7 @@ namespace GCook.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     ReceitaId = table.Column<int>(type: "int", nullable: false),
-                    UsuarioId = table.Column<string>(type: "longtext", nullable: false)
+                    UsuarioId = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     DataComentario = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     TextoComentario = table.Column<string>(type: "varchar(300)", maxLength: 300, nullable: true)
@@ -309,6 +309,12 @@ namespace GCook.Migrations
                         principalTable: "Receita",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Comentario_Usuario_UsuarioId",
+                        column: x => x.UsuarioId,
+                        principalTable: "Usuario",
+                        principalColumn: "UsuarioId",
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -316,20 +322,20 @@ namespace GCook.Migrations
                 name: "ReceitaIngrediente",
                 columns: table => new
                 {
-                    IngredienteId = table.Column<int>(type: "int", nullable: false),
                     ReceitaId = table.Column<int>(type: "int", nullable: false),
+                    IngredienteId = table.Column<int>(type: "int", nullable: false),
                     Quantidade = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Preparo = table.Column<string>(type: "varchar(300)", maxLength: 300, nullable: true)
+                    Preparo = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ReceitaIngrediente", x => new { x.ReceitaId, x.IngredienteId });
                     table.ForeignKey(
-                        name: "FK_ReceitaIngrediente_Ingredientes_IngredienteId",
+                        name: "FK_ReceitaIngrediente_Ingrediente_IngredienteId",
                         column: x => x.IngredienteId,
-                        principalTable: "Ingredientes",
+                        principalTable: "Ingrediente",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -354,7 +360,7 @@ namespace GCook.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "ddf093a6-6cb5-4ff7-9a64-83da34aee005", 0, "cd3a4d4e-6367-4433-965e-b2e352be8be2", "admin@gcook.com", true, false, null, "ADMIN@GCOOK.COM", "ADMIN", "AQAAAAIAAYagAAAAECzbdyKHraI1EchvVXzBXBYlQS2yS8JKZlisHW/2VhWWzUmjdJZbwCl4qyS5IvZ0zQ==", null, false, "393241a8-7833-4687-a839-cea87d46de78", false, "Admin" });
+                values: new object[] { "ddf093a6-6cb5-4ff7-9a64-83da34aee005", 0, "67ce5adb-e79e-4c4f-a8c9-9e35e6dcbac3", "admin@gcook.com", true, false, null, "ADMIN@GCOOK.COM", "ADMIN", "AQAAAAIAAYagAAAAEL00J/wh8bbSv2VStnpdhqW7fIqWzYyHeNkHTT8zJ24vkfbY4fGqBbP7PMg4DuAY9Q==", null, false, "ad8d0591-ceb1-4651-a422-d427aef11fb6", false, "Admin" });
 
             migrationBuilder.InsertData(
                 table: "Categoria",
@@ -374,7 +380,7 @@ namespace GCook.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Ingredientes",
+                table: "Ingrediente",
                 columns: new[] { "Id", "Nome" },
                 values: new object[,]
                 {
@@ -412,7 +418,7 @@ namespace GCook.Migrations
             migrationBuilder.InsertData(
                 table: "Usuario",
                 columns: new[] { "UsuarioId", "DataNascimento", "Foto", "Nome" },
-                values: new object[] { "ddf093a6-6cb5-4ff7-9a64-83da34aee005", new DateTime(1981, 8, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "/img/usuarios/avatar.png", "Janaina Rocha Teixeira" });
+                values: new object[] { "ddf093a6-6cb5-4ff7-9a64-83da34aee005", new DateTime(2007, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "/img/usuarios/avatar.png", "Matheus Bertolini" });
 
             migrationBuilder.InsertData(
                 table: "ReceitaIngrediente",
@@ -477,6 +483,11 @@ namespace GCook.Migrations
                 column: "ReceitaId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Comentario_UsuarioId",
+                table: "Comentario",
+                column: "UsuarioId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Receita_CategoriaId",
                 table: "Receita",
                 column: "CategoriaId");
@@ -512,13 +523,13 @@ namespace GCook.Migrations
                 name: "ReceitaIngrediente");
 
             migrationBuilder.DropTable(
-                name: "Usuario");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Ingredientes");
+                name: "Usuario");
+
+            migrationBuilder.DropTable(
+                name: "Ingrediente");
 
             migrationBuilder.DropTable(
                 name: "Receita");

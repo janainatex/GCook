@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GCook.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240823132716_criar-banco")]
-    partial class criarbanco
+    [Migration("20240923115340_corrigebanco")]
+    partial class corrigebanco
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -142,11 +142,13 @@ namespace GCook.Migrations
 
                     b.Property<string>("UsuarioId")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ReceitaId");
+
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Comentario");
                 });
@@ -166,7 +168,7 @@ namespace GCook.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Ingredientes");
+                    b.ToTable("Ingrediente");
 
                     b.HasData(
                         new
@@ -304,15 +306,16 @@ namespace GCook.Migrations
             modelBuilder.Entity("GCook.Models.ReceitaIngrediente", b =>
                 {
                     b.Property<int>("ReceitaId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnOrder(1);
 
                     b.Property<int>("IngredienteId")
                         .HasColumnType("int")
                         .HasColumnOrder(2);
 
                     b.Property<string>("Preparo")
-                        .HasMaxLength(300)
-                        .HasColumnType("varchar(300)");
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
 
                     b.Property<string>("Quantidade")
                         .IsRequired()
@@ -431,9 +434,9 @@ namespace GCook.Migrations
                         new
                         {
                             UsuarioId = "ddf093a6-6cb5-4ff7-9a64-83da34aee005",
-                            DataNascimento = new DateTime(1981, 8, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DataNascimento = new DateTime(2007, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Foto = "/img/usuarios/avatar.png",
-                            Nome = "Janaina Rocha Teixeira"
+                            Nome = "Matheus Bertolini"
                         });
                 });
 
@@ -576,15 +579,15 @@ namespace GCook.Migrations
                         {
                             Id = "ddf093a6-6cb5-4ff7-9a64-83da34aee005",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cd3a4d4e-6367-4433-965e-b2e352be8be2",
+                            ConcurrencyStamp = "a9cc275c-9085-468f-b60b-d9d31fd0313c",
                             Email = "admin@gcook.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GCOOK.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAECzbdyKHraI1EchvVXzBXBYlQS2yS8JKZlisHW/2VhWWzUmjdJZbwCl4qyS5IvZ0zQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKg/6FyQqxkF+8Blb0j2mQwgCFSU0h0LxnIvRVfVhxfVOSCk1RgxC2xWwTMTrKC2iw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "393241a8-7833-4687-a839-cea87d46de78",
+                            SecurityStamp = "f24b1322-3882-4a37-ac33-748d3bd50eb4",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });
@@ -696,7 +699,15 @@ namespace GCook.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("GCook.Models.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Receita");
+
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("GCook.Models.Receita", b =>

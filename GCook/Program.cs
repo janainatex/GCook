@@ -1,4 +1,5 @@
 using GCook.Data;
+using GCook.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,17 +9,20 @@ var builder = WebApplication.CreateBuilder(args);
 string conn = builder.Configuration.GetConnectionString("Conexao");
 var server = ServerVersion.AutoDetect(conn);
 builder.Services.AddDbContext<AppDbContext>(
- options => options.UseMySql(conn, server)
+    opt => opt.UseMySql(conn, server)
 );
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(
+    opt => opt.SignIn.RequireConfirmedEmail = true
+)
 .AddEntityFrameworkStores<AppDbContext>()
 .AddDefaultTokenProviders();
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddTransient<IUsuarioService, UsuarioService>();
+builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 var app = builder.Build();
-
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -33,6 +37,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

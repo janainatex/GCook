@@ -4,6 +4,7 @@ using GCook.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GCook.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240923102623_atualizabanco")]
+    partial class atualizabanco
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -576,15 +579,15 @@ namespace GCook.Migrations
                         {
                             Id = "ddf093a6-6cb5-4ff7-9a64-83da34aee005",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a9cc275c-9085-468f-b60b-d9d31fd0313c",
+                            ConcurrencyStamp = "8631fc84-ac51-4187-b1eb-5f8ae48ee341",
                             Email = "admin@gcook.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GCOOK.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKg/6FyQqxkF+8Blb0j2mQwgCFSU0h0LxnIvRVfVhxfVOSCk1RgxC2xWwTMTrKC2iw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKJP07XsTWMjZtD8Fi1GrHf5dK7TtGJdLPWiwhQez6gJQdd005ZiLXIzKFsAEIiijA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f24b1322-3882-4a37-ac33-748d3bd50eb4",
+                            SecurityStamp = "73a87d92-c266-4e35-a3f2-bca0d8894a9d",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });

@@ -4,39 +4,35 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace GCook.Models;
 
 [Table("Receita")]
-        public class Receita
-    {
-        [Key]
+public class Receita
+{
+    [Key]
+    public int Id { get; set; }
 
-        public int Id {get; set;}
+    [Required]
+    [StringLength(100)]
+    public string Nome { get; set; }
 
-        [Required]
-        [StringLength(100)]
+    [StringLength(1000)]
+    public string Descricao { get; set; }
 
-        public string Nome {get; set;}
+    [StringLength(30)]
+    public string TempoPreparo { get; set; }
 
-        [StringLength(1000)]
-        public string Descricao {get; set;}
+    public int Rendimento { get; set; }
 
-        [StringLength(30)]
-        public string TempoPreparo {get; set;}
+    public Dificuldade Dificuldade { get; set; }
 
-        public int Rendimento {get; set;}
-        public Dificuldade Dificuldade {get; set;}
+    [StringLength(300)]
+    public string Foto { get; set; }
 
-        [StringLength(300)]
-         public string Foto {get; set;}
+    [Required]
+    [StringLength(8000)]
+    public string Preparo { get; set; }
 
-         [Required]
-         [StringLength(8000)]
-
-         public string Preparo {get; set;}
-
-         [Required]
-         public int CategoriaId { get; set;}
-         [ForeignKey("CategoriaId")]
-         public Categoria Categoria {get; set;}
-
-        public ICollection<ReceitaIngrediente> Ingredientes {get; set;}
-
-    }
+    [Required]
+    public int CategoriaId { get; set; }
+    [ForeignKey("CategoriaId")]
+    public Categoria Categoria { get; set; }
+    public ICollection<ReceitaIngrediente> Ingredientes { get; set; }
+}

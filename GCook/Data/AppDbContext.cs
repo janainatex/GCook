@@ -5,19 +5,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GCook.Data;
 
-    public class AppDbContext : IdentityDbContext
-    {
+public class AppDbContext : IdentityDbContext
+{
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
         
     }
 
-    public DbSet<Categoria> Categorias {get; set;}
-    public DbSet<Comentario> Comentarios {get; set;}
-    public DbSet<Ingrediente> Ingredientes {get; set;}
-    public DbSet<Receita> Receitas {get; set;}
-    public DbSet<ReceitaIngrediente> ReceitaIngredientes {get; set;}
-    public DbSet<Usuario> Usuarios {get; set;}
+    public DbSet<Categoria> Categorias { get; set; }
+    public DbSet<Comentario> Comentarios { get; set; }
+    public DbSet<Ingrediente> Ingredientes { get; set; }
+    public DbSet<Receita> Receitas { get; set; }
+    public DbSet<ReceitaIngrediente> ReceitaIngredientes { get; set; }
+    public DbSet<Usuario> Usuarios { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -25,11 +25,6 @@ namespace GCook.Data;
         AppDbSeed seed = new(builder);
 
         builder.Entity<ReceitaIngrediente>()
-        .HasKey(ri => new {ri.ReceitaId, ri.IngredienteId});
-
-      
-        
-         
+            .HasKey(ri => new {ri.ReceitaId, ri.IngredienteId});
     }
-
 }

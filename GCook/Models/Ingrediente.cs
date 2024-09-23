@@ -1,15 +1,15 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GCook.Models;
 
-    public class Ingrediente
-    {
-        [Key]
+[Table("Ingrediente")]
+public class Ingrediente
+{
+    [Key]
+    public int Id { get; set; }
 
-        public int Id {get; set;}
-
-        [Required]
-        [StringLength(50)]
-
-        public string Nome {get; set;}
-    }
+    [Required]
+    [StringLength(50)]
+    public string Nome { get; set; }
+}
